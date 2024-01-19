@@ -3,8 +3,6 @@
 var currentTime = dayjs().format("dddd, MMMM D"); 
 $("#currentDay").text(currentTime);
 
-Description:
-
 // To enhance the user experience, create time blocks for standard business hours that are visible when the user scrolls down the planner.
 
 // Present time blocks for standard business hours (e.g., 9 AM to 5 PM) on the calendar.
@@ -16,38 +14,31 @@ var timeBlocksContainer = $("#timeBlocks");
 
 $(document).ready(function () {
     var container = $('.container');
-    var table = $('<table>').attr('id', 'plannerTable');
-    table.addClass("w-100");
+    var table = $('<table>').attr('id', 'plannerTable').addClass("w-100");
 
     // Create table body with 9 rows
-    var tableBody = $('<tbody>').attr('id', 'timeBlocks');
-    tableBody.addClass("w-100");
-    //rows for 9am-11am
+    var tableBody = $('<tbody>').attr('id', 'timeBlocks').addClass("w-100");
+
+    // Function to create a time block row
+    function createTimeBlockRow(hour, suffix) {
+        return $('<tr class="border-bottom">').append(
+            $('<td>').addClass('time-column text-left').text(hour + suffix),
+            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
+            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
+        );
+    }
+
+    // Create rows for 9am-11am
     for (let i = 8; i < 11; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'AM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
+        tableBody.append(createTimeBlockRow((i + 1), 'AM'));
     }
-    //row for 12pm
-    for (let i = 11; i < 12; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'PM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
-    }
-    //rows for 1pm-5pm
+
+    // Create row for 12pm
+    tableBody.append(createTimeBlockRow(12, 'PM'));
+
+    // Create rows for 1pm-5pm
     for (let i = 0; i < 5; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'PM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
+        tableBody.append(createTimeBlockRow((i + 1), 'PM'));
     }
 
     // Append the body to the table
