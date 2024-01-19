@@ -1,9 +1,7 @@
-
+$(document).ready(function () {
 // Display the current day in format: Friday, January 19th (utilize day.js library)
-var currentTime = dayjs().format("dddd, MMMM D"); 
+var currentTime = dayjs().format("dddd, MMMM D");
 $("#currentDay").text(currentTime);
-
-Description:
 
 // To enhance the user experience, create time blocks for standard business hours that are visible when the user scrolls down the planner.
 
@@ -12,47 +10,67 @@ Description:
 // Implement dynamic HTML/CSS for the time blocks.
 // Ensure smooth scrolling behavior for a seamless experience.
 
-var timeBlocksContainer = $("#timeBlocks");
+//var timeBlocksContainer = $("#timeBlock");
 
-$(document).ready(function () {
+
     var container = $('.container');
-    var table = $('<table>').attr('id', 'plannerTable');
-    table.addClass("w-100");
+    var table = $('<table>').attr('id', 'table').addClass("w-100");
 
     // Create table body with 9 rows
-    var tableBody = $('<tbody>').attr('id', 'timeBlocks');
-    tableBody.addClass("w-100");
-    //rows for 9am-11am
-    for (let i = 8; i < 11; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'AM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
-    }
-    //row for 12pm
-    for (let i = 11; i < 12; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'PM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
-    }
-    //rows for 1pm-5pm
-    for (let i = 0; i < 5; i++) {
-        var timeBlockRow = $('<tr class="border-bottom">').append(
-            $('<td>').addClass('time-column text-left').text((i + 1) + 'PM'),
-            $('<td>').addClass('task-column w-75 text-left bg-secondary').text('Task'),
-            $('<td>').addClass('action-column').append($('<button class="btn btn-primary">').text('🔒'))
-        );
-        tableBody.append(timeBlockRow);
-    }
+    var tableBody = $('<tbody>').attr('id', 'tableBody').addClass("w-100");
 
+    // Function to create a time block row
+    function createTimeBlockRow(hour, suffix, data) {
+        var newRow = $('<tr class="customRow">').append(
+            $('<td>').addClass('time').attr('data-hour', data).text(hour + suffix),
+            $('<td>').addClass('task').append($('<textarea>').addClass('form-control')),
+            $('<td>').addClass('action').append($('<button class="customBtn">').text('💾'))
+        );
+        //Save the hour value as a data attribute in a 'time' column
+        // newRow.find('.time').attr('hour', hour);
+        return newRow;
+    }
+    // Create rows for 9am-11am
+    for (var i = 8; i < 11; i++) {
+        tableBody.append(createTimeBlockRow((i + 1), 'AM', (i + 1)));
+    }
+    // Create row for 12pm
+    tableBody.append(createTimeBlockRow(12, 'PM', 12));
+    // Create rows for 1pm-5pm
+    for (var i = 0; i < 5; i++) {
+        tableBody.append(createTimeBlockRow((i + 1), 'PM', (i + 12)));
+    }
     // Append the body to the table
     table.append(tableBody);
-
     // Append the table to the container
     container.append(table);
+
+
+//loop through timeBlock and check the hour
+//if an hour is equal to current hour add red background
+//if past bg-gray
+//if future bg-green
+
+// Function to compare the data-hour values with the current time
+function compareTimeWithCurrent() {
+    //get the current hour
+    var currentHour = parseInt(dayjs().format("H"));
+//console.log(currentHour);
+
+// Loop through all elements with the class '.time'
+$('.time').each(function(){
+    //Get the value of the data-hour attribute
+    var hourValue = parseInt($(this).attr('data-hour'));
+
+    if (hourValue < currentHour) {
+        $('.form-control').addClass('past'); // Change to your desired color
+    } else if (hourValue === currentHour) {
+        $('.form-control').addClass('present'); // Change to your desired color
+    } else {
+        $('.form-control').addClass('future'); // Change to your desired color
+    }
+})
+}
+
+compareTimeWithCurrent();
 });
