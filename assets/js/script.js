@@ -10,26 +10,26 @@ $("#currentDay").text(currentTime);
 // Implement dynamic HTML/CSS for the time blocks.
 // Ensure smooth scrolling behavior for a seamless experience.
 
-//var timeBlocksContainer = $("#timeBlock");
-
-
     var container = $('.container');
     var table = $('<table>').attr('id', 'table').addClass("w-100");
 
     // Create table body with 9 rows
     var tableBody = $('<tbody>').attr('id', 'tableBody').addClass("w-100");
-
-    var userInput;
+    var taskCollection = {};
 
     // Function to create a time block row
     function createTimeBlockRow(hour, suffix, data) {
-        var newRow = $('<tr class="customRow">').append(
+        var newRow = $('<tr class="customRow">').attr('id', 'row').append(
             $('<td>').addClass('time').attr('data-hour', data).text(hour + suffix),
-            $('<td>').addClass('task').append($('<textarea>').addClass('form-control')),
+            $('<td>').addClass('task').append($('<textarea>').addClass('userInput form-control')),
             $('<td>').addClass('action').append($('<button class="customBtn">').text('💾'))
         );
         //Save the hour value as a data attribute in a 'time' column
         // newRow.find('.time').attr('hour', hour);
+
+        // Save the initial value of the textarea in taskCollection
+        taskCollection[data] = { data: newRow.find('.userInput').val() };
+
         return newRow;
     }
     // Create rows for 9am-11am
@@ -64,7 +64,7 @@ $('.time').each(function(){
     //Get the value of the data-hour attribute
     var hourValue = parseInt($(this).attr('data-hour'));
     // Find the textarea within the current row
-    var textarea = $(this).closest('tr').find('.form-control');
+    var textarea = $(this).closest('tr').find('.userInput');
 
     // Compare the hourValue with the currentHour and apply background color accordingly
     if (hourValue < currentHour) {
@@ -79,28 +79,50 @@ $('.time').each(function(){
 // Call the function to initially set background colors based on the current time
 compareTimeWithCurrent();
 
+//PSEUDOCODE:
+//when row is created, take a value of data together with value of textarea and create an object, 
+//add this object to a collection on task. taskCollection = {data: .userInput.value}
+    //taskCollection[data] = { data: newRow.find('.userInput').val() };
 
-// Allow users to input events by clicking on a time block. This enhances interactivity and allows users to manage their schedules effectively.
-// Users can click on a time block to enter an event.
-// Implement event listeners to capture user input.
-// Dynamically update the UI to provide a space for event entry.
+//when user add or change value of the input update this in a taskCollection#
+   // Use event delegation to handle 'input' events on textareas within a specific row
+   $('.container').on('input', '.customRow .userInput', function () {
+    var timeValue = $(this).closest('tr').find('.time').data('hour');
+    var inputValue = $(this).val();
 
-    // Event listener for time blocks
-    $('.task').on('click', function () {
-        var textarea = $(this).closest('tr').find('.form-control');
-        userInput = textarea.val();
-        //console.log(userInput);
-    })
+    // Update taskCollection with a new object for each row
+    taskCollection[timeValue] = { data: timeValue, userInput: inputValue };
 
+    console.log('Task Collection:', taskCollection);
+});
+//.................................................................
+// PSEUDOCOSE:
+//when user press the save button, the function will check what is a data value in its row
+//then will find the object with that date in collection array, and add this object to local storage.
+   // Event listener to handle 'click' events on the save button
+   $('.container').on('click', '.customRow .customBtn', function () {
+    // Find the closest row to the button
+    var closestRow = $(this).closest('tr');
+    // Retrieve the data value from the closest row
+    var dataValue = closestRow.find('.time').data('hour');
+    // Retrieve the userInput value from the closest row
+    var userInputValue = closestRow.find('.userInput').val();
 
-// To ensure users don't lose their scheduled events between page refreshes, implement local storage to save and retrieve events.
-// Save events to local storage when the save button is clicked.
-$('.action').on('click', function(){
-    localStorage.setItem('task', JSON.stringify(userInput));
-})
+    // Retrieve existing data from local storage
+    var storedData = JSON.parse(localStorage.getItem('rowData')) || {};
 
-// Retrieve and display saved events when the page is refreshed.
-// Use local storage APIs for storing and retrieving event data.
-var savedTask = JSON.parse(localStorage.getItem("task"));
-$('.form-control').val(savedTask);
+    // Check if the object with the same data value already exists
+    if (storedData.hasOwnProperty(dataValue)) {
+        // Update the existing object's userInput value
+        storedData[dataValue].userInput = userInputValue;
+    } else {
+        // Create a new object for the specific row
+        storedData[dataValue] = { data: dataValue, userInput: userInputValue };
+    }
+    // Save the updated data to local storage
+    localStorage.setItem('rowData', JSON.stringify(storedData));
+
+    console.log('Row Data updated and saved to local storage:', storedData);
+});
+
 });
