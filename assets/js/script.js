@@ -19,6 +19,8 @@ $("#currentDay").text(currentTime);
     // Create table body with 9 rows
     var tableBody = $('<tbody>').attr('id', 'tableBody').addClass("w-100");
 
+    var userInput;
+
     // Function to create a time block row
     function createTimeBlockRow(hour, suffix, data) {
         var newRow = $('<tr class="customRow">').append(
@@ -61,8 +63,10 @@ function compareTimeWithCurrent() {
 $('.time').each(function(){
     //Get the value of the data-hour attribute
     var hourValue = parseInt($(this).attr('data-hour'));
+    // Find the textarea within the current row
     var textarea = $(this).closest('tr').find('.form-control');
 
+    // Compare the hourValue with the currentHour and apply background color accordingly
     if (hourValue < currentHour) {
         textarea.addClass('past'); // Change to your desired color
     }else if (hourValue === currentHour) {
@@ -72,6 +76,31 @@ $('.time').each(function(){
     }
 })
 }
-
+// Call the function to initially set background colors based on the current time
 compareTimeWithCurrent();
+
+
+// Allow users to input events by clicking on a time block. This enhances interactivity and allows users to manage their schedules effectively.
+// Users can click on a time block to enter an event.
+// Implement event listeners to capture user input.
+// Dynamically update the UI to provide a space for event entry.
+
+    // Event listener for time blocks
+    $('.task').on('click', function () {
+        var textarea = $(this).closest('tr').find('.form-control');
+        userInput = textarea.val();
+        //console.log(userInput);
+    })
+
+
+// To ensure users don't lose their scheduled events between page refreshes, implement local storage to save and retrieve events.
+// Save events to local storage when the save button is clicked.
+$('.action').on('click', function(){
+    localStorage.setItem('task', JSON.stringify(userInput));
+})
+
+// Retrieve and display saved events when the page is refreshed.
+// Use local storage APIs for storing and retrieving event data.
+var savedTask = JSON.parse(localStorage.getItem("task"));
+$('.form-control').val(savedTask);
 });
