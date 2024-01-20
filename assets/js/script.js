@@ -61,13 +61,14 @@ function compareTimeWithCurrent() {
 $('.time').each(function(){
     //Get the value of the data-hour attribute
     var hourValue = parseInt($(this).attr('data-hour'));
+    var textarea = $(this).closest('tr').find('.form-control');
 
     if (hourValue < currentHour) {
-        $('.form-control').addClass('past'); // Change to your desired color
-    } else if (hourValue === currentHour) {
-        $('.form-control').addClass('present'); // Change to your desired color
-    } else {
-        $('.form-control').addClass('future'); // Change to your desired color
+        textarea.addClass('past'); // Change to your desired color
+    }else if (hourValue === currentHour) {
+        textarea.addClass('present'); // Change to your desired color
+    }else{
+        textarea.addClass('future'); // Change to your desired color
     }
 })
 }
