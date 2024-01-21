@@ -1,3 +1,5 @@
+https://designs-by-kate.github.io/Work-Day-Scheduler/
+
 # **DAILY PLANNER APP**
 
 This is a simple Daily Planner app that allows users to organize their tasks and schedule for the day.
