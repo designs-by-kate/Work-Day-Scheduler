@@ -33,3 +33,6 @@ USAGE
 Open the index.html file in a web browser.
 Use the app to organize tasks for the day by inputting information into the text areas.
 Click the save button to store tasks in local storage.
+
+How to Contribute
+If you find any issues or have suggestions for improvements, feel free to open an issue or create a pull request.
