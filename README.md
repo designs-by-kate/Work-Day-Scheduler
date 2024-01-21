@@ -1,87 +1,35 @@
-# Third-Party APIs: Work Day Scheduler
+DAILY PLANNER APP
 
-## Your Task
+This is a simple Daily Planner app that allows users to organize their tasks and schedule for the day.
+It includes features such as displaying the current day, creating time blocks for standard business hours, dynamically updating HTML/CSS for time blocks, and saving tasks to local storage.
 
-Create a simple calendar application that allows a user to save events for each hour of the day by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
+FEATURES
 
-You'll need to use the [Day.js](https://day.js.org/docs/en/display/format) library to work with date and time. Be sure to read the documentation carefully and concentrate on using Day.js in the browser.
+Current Day Display:
 
-## User Story
+Utilizes the day.js library to display the current day in the format: "Friday, January 19th."
 
-```md
-AS AN employee with a busy schedule
-I WANT to add important events to a daily planner
-SO THAT I can manage my time effectively
-```
+Time Blocks:
 
-## Acceptance Criteria
+Presents time blocks for standard business hours (9 AM to 5 PM) on the calendar.
+Implements dynamic HTML/CSS for time blocks to enhance user experience.
+Ensures smooth scrolling behavior for seamless navigation.
 
-The app should:
+Time Block Coloring:
 
-* Display the current day at the top of the calender when a user opens the planner.
- 
-* Present timeblocks for standard business hours when the user scrolls down.
- 
-* Color-code each timeblock based on past, present, and future when the timeblock is viewed.
- 
-* Allow a user to enter an event when they click a timeblock
+Dynamically changes the background color of time blocks based on whether they represent past, present, or future hours.
 
-* Save the event in local storage when the save button is clicked in that timeblock.
+Task Collection:
 
-* Persist events between refreshes of a page
+Maintains a task collection, storing initial textarea values and updating them as users input new data.
 
-The following animation demonstrates the application functionality:
+Local Storage:
 
-![A user clicks on slots on the color-coded calendar and edits the events.](./images/05-third-party-apis-homework-demo.gif)
+Saves task data to local storage when users click the save button.
+Retrieves and updates text areas with stored data on page load.
 
+USAGE
 
-## Grading Requirements
-
-This homework is graded based on the following criteria: 
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the above acceptance criteria plus the following:
-
-  * Uses a date utility library to work with date and time
-
-### Deployment: 32%
-
-* Application deployed at live URL
-
-* Application loads with no errors
-
-* Application GitHub URL submitted
-
-* GitHub repo contains application code
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate
-
-* Application user interface style is clean and polished
-
-* Application resembles the mock-up functionality provided in the homework instructions
-
-### Repository Quality: 13%
-
-* Repository has a unique name
-
-* Repository follows best practices for file structure and naming conventions
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages
-
-* Repository contains quality README file with description, screenshot, and link to deployed application
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
----
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+Open the index.html file in a web browser.
+Use the app to organize tasks for the day by inputting information into the text areas.
+Click the save button to store tasks in local storage.
