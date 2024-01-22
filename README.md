@@ -4,10 +4,12 @@ https://designs-by-kate.github.io/Work-Day-Scheduler/
 
 This is a simple Daily Planner app that allows users to organize their tasks and schedule for the day.
 It includes features such as displaying the current day, creating time blocks for standard business hours, dynamically updating HTML/CSS for time blocks, and saving tasks to local storage.
-![image](https://github.com/designs-by-kate/Work-Day-Scheduler/assets/146155569/17108fba-75e2-461a-b983-1375fbc8261b)
+![image](https://github.com/designs-by-kate/Work-Day-Scheduler/assets/146155569/57e837da-07af-4dfd-a7b1-96f046ecdede)
+
 
 ![image](https://github.com/designs-by-kate/Work-Day-Scheduler/assets/146155569/fc89a2f8-316e-42dc-a6a9-5ccb90a5f89f)
-![image](https://github.com/designs-by-kate/Work-Day-Scheduler/assets/146155569/5017e180-891f-4eb8-a016-7e9c9e13e9e8)
+![image](https://github.com/designs-by-kate/Work-Day-Scheduler/assets/146155569/1b3734bb-6a01-4f5a-9d07-5eab2c8760d7)
+
 
 
 ## **FEATURES**
