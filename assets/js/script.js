@@ -1,7 +1,5 @@
 $(document).ready(function () {
     // Display the current day using day.js library
-    var currentTime = dayjs().format("dddd, MMMM D");
-    $("#currentDay").text(currentTime);
 
     // Container for the time block table
     var container = $('.container');
@@ -11,6 +9,26 @@ $(document).ready(function () {
     var tableBody = $('<tbody>').attr('id', 'tableBody');
     // Collection to store task and data
     var taskCollection = {};
+
+    // Function to determine the ordinal suffix for a given day of the month
+    var ordinal = function(o) {
+        if (o > 3 && o < 21) return 'th';
+        switch (o % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    };
+    //Get current day details
+    var currentDay = dayjs().format("dddd");
+    var currentDayOfMonth = dayjs().format("D");
+    var currentMonth = dayjs().format("MMMM");
+    var ordinalSuffix = ordinal(currentDayOfMonth);
+    var currentTime = currentDay + ', ' + currentMonth + ' ' + currentDayOfMonth + ordinalSuffix;
+
+    //Display current time on the page
+    $("#currentDay").text(currentTime);
 
     // Function to create a time block row
     function createTimeBlockRow(hour, suffix, data) {
